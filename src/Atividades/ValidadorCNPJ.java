@@ -21,10 +21,12 @@ public class ValidadorCNPJ {
         }
 
 
-        // Remove pontos, barra, traço etc.
+        // Remove pontos, barras, traços
         public static String limparCNPJ(String cnpj) {
 
-            return cnpj.replaceAll("\\D", "");
+            return cnpj.replace(".", "")
+                    .replace("/", "")
+                    .replace("-", "");
         }
 
 
@@ -51,7 +53,6 @@ public class ValidadorCNPJ {
         }
 
 
-        // Calcula o primeiro dígito verificador
         public static int calcularPrimeiroDigito(String cnpj) {
 
             int[] pesos = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
@@ -75,7 +76,6 @@ public class ValidadorCNPJ {
         }
 
 
-        // Calcula o segundo dígito verificador
         public static int calcularSegundoDigito(String cnpj, int primeiroDigito) {
 
             int[] pesos = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
@@ -101,7 +101,7 @@ public class ValidadorCNPJ {
         }
 
 
-        // Faz a validação final do CNPJ
+        // valida o final do CNPJ
         public static boolean validarCNPJ(String cnpj) {
 
             if (!verificarTamanho(cnpj)) {
