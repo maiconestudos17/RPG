@@ -3,12 +3,13 @@ package Atividades;
 import java.util.Random;
 import java.util.Scanner;
 
-public class LabirintoTwo {
+public class Labirinto {
+    // Gera uma posição aleatória
     public static int gerarPosicaoAleatoria(int limite) {
         Random random = new Random();
         return random.nextInt(limite);
     }
-
+    // Verifica se está dentro da matriz
     public static boolean dentroDosLimites(int linha, int coluna, int linhasMax, int colunasMax) {
         return linha >= 0 && linha < linhasMax && coluna >= 0 && coluna < colunasMax;
     }
@@ -25,7 +26,7 @@ public class LabirintoTwo {
 
         int linhaHeroi;
         int colunaHeroi;
-
+        // Sorteia a posição do herói
         do{
             linhaHeroi = gerarPosicaoAleatoria(5);
             colunaHeroi = gerarPosicaoAleatoria(5);
@@ -35,7 +36,7 @@ public class LabirintoTwo {
 
         int linhaTesouro;
         int colunaTesouro;
-
+        // Sorteia a posição do tesouro
         do{
             linhaTesouro = gerarPosicaoAleatoria(5);
             colunaTesouro = gerarPosicaoAleatoria(5);
@@ -44,10 +45,10 @@ public class LabirintoTwo {
         labirinto[linhaTesouro][colunaTesouro] = 'T';
 
         boolean venceu = false;
-
+        // Executa o jogo
         while (!venceu){
 
-
+            // Mostra o labirinto
             System.out.println("\nLABIRINTO:");
 
             for (int i = 0; i < 5; i++) {
@@ -57,13 +58,12 @@ public class LabirintoTwo {
                 System.out.println();
             }
 
-            System.out.print("\nMovimento " +
-                    "(W = Cima / S = Baixo / A = Esquerda / D = Direita): ");
+            System.out.print("\nMovimento " + "(W/A/S/D): ");
             String comando = sc.nextLine().toUpperCase();
 
             int novaLinha = linhaHeroi;
             int novaColuna = colunaHeroi;
-
+            // Movimenta o herói
             switch (comando){
                 case "W":
                     novaLinha--;
@@ -82,29 +82,30 @@ public class LabirintoTwo {
                     continue;
 
             }
-
+            // Verifica os limites
             if(!dentroDosLimites(novaLinha, novaColuna, 5, 5)){
                 System.out.println("\nVOCÊ SAIU DOS LIMITES!");
                 continue;
             }
-
+            // Verifica as paredes
             if (labirinto[novaLinha][novaColuna] == '1'){
                 System.out.println("\nHÁ UMA PAREDE AQUI!");
                 continue;
             }
-
+            // Verifica se encontrou o tesouro
             if (labirinto[novaLinha][novaColuna] == 'T'){
                 venceu = true;
             }
-
+            // Apaga a posição anterior do heroi
             labirinto[linhaHeroi][colunaHeroi] = '0';
-
+            // Atualiza a posição
             linhaHeroi = novaLinha;
             colunaHeroi = novaColuna;
 
             labirinto[linhaHeroi][colunaHeroi] = 'H';
         }
 
+        // Mostra o labirinto final
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 System.out.print(labirinto[i][j] + " ");
